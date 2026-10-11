@@ -1,0 +1,133 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Stepper from '../components/Stepper.astro';
+import ConfirmDialog from '../components/ConfirmDialog.astro';
+import Icons from '../components/Icons.astro';
+import { SITE_NAME, PROTOTYPE_MODE } from '../data/constants';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${SITE_NAME} - Maharashtra Public Distribution System`,
+  description = 'Empowering Maharashtra ration card beneficiaries to calculate statutory foodgrain quotas, track shop deliveries, and generate official shortage grievance reports.'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0B3D91" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+
+    <!-- Pre-paint Theme Script (Eliminates Theme Flash / FOUC) -->
+    <script is:inline>
+      (function() {
+        try {
+          const savedTheme = localStorage.getItem('rs_theme');
+          const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : (systemDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+
+          const metaTheme = document.querySelector('meta[name="theme-color"]');
+          if (metaTheme) {
+            metaTheme.setAttribute('content', theme === 'dark' ? '#0A1122' : '#0B3D91');
+          }
+
+          // Initial Language Setup
+          const savedLang = localStorage.getItem('rs_lang');
+          if (savedLang && (savedLang === 'mr' || savedLang === 'hi' || savedLang === 'en')) {
+            document.documentElement.lang = savedLang;
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link" data-i18n="skip_to_content">
+      Skip to main content
+    </a>
+
+    <!-- Header with Tricolor, Logo Placeholder, Helpline, Language, Theme Toggle -->
+    <Header />
+
+    <!-- Prototype Mode Notice Banner (Controlled by PROTOTYPE_MODE constant) -->
+    {PROTOTYPE_MODE && (
+      <aside class="prototype-banner no-print" id="prototype-banner" role="region" aria-label="Prototype Notice">
+        <div class="container banner-inner">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span class="banner-tag">
+              <Icons name="info" size={12} />
+              Prototype Mode
+            </span>
+            <span data-i18n="prototype_banner_text">
+              Prototype Demonstration Notice: This portal operates fully in client-side evaluation mode. Quotas are simulated sample entitlements for verification demonstration.
+            </span>
+          </div>
+          <button type="button" id="prototype-dismiss-btn" class="banner-dismiss-btn" aria-label="Dismiss prototype notice">
+            ✕
+          </button>
+        </div>
+      </aside>
+    )}
+
+    <!-- 5-Step Stepper Component -->
+    <Stepper />
+
+    <!-- Main Wizard Content Landmark -->
+    <main id="main-content" class="container main-content-wrap">
+      <slot />
+    </main>
+
+    <!-- Public Sector Standard Footer -->
+    <Footer />
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container no-print" aria-live="polite"></div>
+
+    <!-- Confirm Reset Dialog -->
+    <ConfirmDialog />
+
+    <!-- Application Controller -->
+    <script>
+      import { initApp } from '../scripts/app';
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+      } else {
+        initApp();
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .main-content-wrap {
+    flex: 1;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .banner-dismiss-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-muted);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+  .banner-dismiss-btn:hover {
+    color: var(--color-text);
+  }
+</style>

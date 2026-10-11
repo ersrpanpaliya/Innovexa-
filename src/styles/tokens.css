@@ -1,0 +1,115 @@
+/**
+ * Design Tokens - Ration Saathi
+ * Government of Maharashtra Public Distribution Portal
+ * Strictly adheres to WCAG 2.1 AA / GIGW color contrast standards
+ */
+
+:root {
+  /* Common Palette & Functional Tokens */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-deva: 'Noto Sans Devanagari', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family: var(--font-sans);
+
+  /* Animation Easings & Durations */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-medium: 400ms;
+  --duration-slow: 600ms;
+
+  /* Card Category Brand Colors */
+  --cat-orange: #EA580C;
+  --cat-orange-bg: rgba(234, 88, 12, 0.12);
+  --cat-yellow: #CA8A04;
+  --cat-yellow-bg: rgba(202, 138, 4, 0.14);
+  --cat-white: #64748B;
+  --cat-white-bg: rgba(100, 116, 139, 0.12);
+  --cat-aay: #DC2626;
+  --cat-aay-bg: rgba(220, 38, 38, 0.12);
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(11, 27, 51, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(11, 27, 51, 0.08), 0 2px 4px -2px rgba(11, 27, 51, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(11, 27, 51, 0.1), 0 4px 6px -4px rgba(11, 27, 51, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(11, 27, 51, 0.12), 0 8px 10px -6px rgba(11, 27, 51, 0.06);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Container */
+  --max-width: 1200px;
+}
+
+/* Light Theme (Default) */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: #F6F8FC;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F1F4F9;
+  --color-surface-subtle: #EDF2F9;
+  --color-text: #0B1B33;
+  --color-muted: #475569;
+  --color-primary: #0B3D91;
+  --color-primary-hover: #072B68;
+  --color-primary-active: #051F4B;
+  --color-primary-subtle: rgba(11, 61, 145, 0.08);
+  --color-accent: #F28C28;
+  --color-accent-subtle: rgba(242, 140, 40, 0.12);
+  --color-success: #15803D;
+  --color-success-bg: rgba(21, 128, 61, 0.1);
+  --color-danger: #B91C1C;
+  --color-danger-bg: rgba(185, 28, 28, 0.1);
+  --color-warning: #B45309;
+  --color-warning-bg: rgba(180, 83, 9, 0.1);
+  --color-border: #D5DDEA;
+  --color-border-subtle: #E3E8F3;
+  --color-input-bg: #FFFFFF;
+  --color-focus-ring: #0B3D91;
+  --header-bg: rgba(255, 255, 255, 0.94);
+  --hero-card-gradient: linear-gradient(145deg, #FFFFFF 0%, #F0F4FC 100%);
+  --badge-bg: #EDF2F9;
+  --table-stripe: #F8FAFC;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0A1122;
+  --color-surface: #111B33;
+  --color-surface-hover: #172444;
+  --color-surface-subtle: #14203D;
+  --color-text: #EAF0FB;
+  --color-muted: #9FB0CC;
+  --color-primary: #5B9CFF;
+  --color-primary-hover: #7CB1FF;
+  --color-primary-active: #9BBEFF;
+  --color-primary-subtle: rgba(91, 156, 255, 0.12);
+  --color-accent: #FFA64D;
+  --color-accent-subtle: rgba(255, 166, 77, 0.14);
+  --color-success: #34D399;
+  --color-success-bg: rgba(52, 211, 153, 0.12);
+  --color-danger: #F87171;
+  --color-danger-bg: rgba(248, 113, 113, 0.12);
+  --color-warning: #FBBF24;
+  --color-warning-bg: rgba(251, 191, 36, 0.12);
+  --color-border: #25324F;
+  --color-border-subtle: #1D2840;
+  --color-input-bg: #0B1428;
+  --color-focus-ring: #5B9CFF;
+  --header-bg: rgba(17, 27, 51, 0.94);
+  --hero-card-gradient: linear-gradient(145deg, #131F3B 0%, #0E162B 100%);
+  --badge-bg: #172444;
+  --table-stripe: #0D162B;
+}
+
+/* Language font family adaptation */
+:root:lang(mr),
+:root:lang(hi) {
+  --font-family: var(--font-deva);
+}

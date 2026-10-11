@@ -1,0 +1,343 @@
+---
+import Icons from './Icons.astro';
+---
+
+<section id="step-3" class="wizard-step" aria-labelledby="step-3-heading" hidden>
+  <div class="entitlement-layout-container">
+    <div class="gov-card entitlement-card">
+      <div class="card-head">
+        <h2 id="step-3-heading" class="card-title" data-i18n="entitlement_title">
+          Your Monthly Statutory Entitlement
+        </h2>
+        <p class="card-subtitle" data-i18n="entitlement_subtitle">
+          Prescribed monthly foodgrain quota according to Maharashtra PDS regulations
+        </p>
+
+        <!-- Beneficiary Identification Banner -->
+        <div class="beneficiary-meta-bar">
+          <div class="meta-item">
+            <span class="meta-label">Beneficiary:</span>
+            <strong id="entitlement-beneficiary-name" class="meta-value">—</strong>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Card Category:</span>
+            <span id="entitlement-card-chip" class="category-meta-chip">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Commodity Entitlement Cards with Count-up & Progress Rings -->
+      <div class="entitlement-grid">
+        <!-- Wheat Card -->
+        <div class="gov-card commodity-ent-card">
+          <div class="ring-wrapper">
+            <svg class="progress-ring" width="96" height="96" viewBox="0 0 96 96" aria-hidden="true">
+              <circle class="ring-bg" cx="48" cy="48" r="38" />
+              <circle
+                id="ring-wheat-fill"
+                class="ring-fill ring-wheat"
+                cx="48"
+                cy="48"
+                r="38"
+                stroke-dasharray="238.76"
+                stroke-dashoffset="238.76"
+              />
+            </svg>
+            <div class="ring-icon-center text-amber">
+              <Icons name="wheat" size={32} />
+            </div>
+          </div>
+
+          <div class="ent-details">
+            <span class="ent-commodity-name" data-i18n="commodity_wheat">Wheat</span>
+            <div class="ent-qty-wrap">
+              <span id="entitlement-qty-wheat" class="ent-qty-number tabular-nums">0</span>
+              <span class="ent-qty-unit" data-i18n="unit_kg">kg</span>
+            </div>
+            <span class="ent-quota-subtext">Monthly Allocation</span>
+          </div>
+        </div>
+
+        <!-- Rice Card -->
+        <div class="gov-card commodity-ent-card">
+          <div class="ring-wrapper">
+            <svg class="progress-ring" width="96" height="96" viewBox="0 0 96 96" aria-hidden="true">
+              <circle class="ring-bg" cx="48" cy="48" r="38" />
+              <circle
+                id="ring-rice-fill"
+                class="ring-fill ring-rice"
+                cx="48"
+                cy="48"
+                r="38"
+                stroke-dasharray="238.76"
+                stroke-dashoffset="238.76"
+              />
+            </svg>
+            <div class="ring-icon-center text-blue">
+              <Icons name="rice" size={30} />
+            </div>
+          </div>
+
+          <div class="ent-details">
+            <span class="ent-commodity-name" data-i18n="commodity_rice">Rice</span>
+            <div class="ent-qty-wrap">
+              <span id="entitlement-qty-rice" class="ent-qty-number tabular-nums">0</span>
+              <span class="ent-qty-unit" data-i18n="unit_kg">kg</span>
+            </div>
+            <span class="ent-quota-subtext">Monthly Allocation</span>
+          </div>
+        </div>
+
+        <!-- Sugar Card -->
+        <div class="gov-card commodity-ent-card">
+          <div class="ring-wrapper">
+            <svg class="progress-ring" width="96" height="96" viewBox="0 0 96 96" aria-hidden="true">
+              <circle class="ring-bg" cx="48" cy="48" r="38" />
+              <circle
+                id="ring-sugar-fill"
+                class="ring-fill ring-sugar"
+                cx="48"
+                cy="48"
+                r="38"
+                stroke-dasharray="238.76"
+                stroke-dashoffset="238.76"
+              />
+            </svg>
+            <div class="ring-icon-center text-teal">
+              <Icons name="sugar" size={30} />
+            </div>
+          </div>
+
+          <div class="ent-details">
+            <span class="ent-commodity-name" data-i18n="commodity_sugar">Sugar</span>
+            <div class="ent-qty-wrap">
+              <span id="entitlement-qty-sugar" class="ent-qty-number tabular-nums">0</span>
+              <span class="ent-qty-unit" data-i18n="unit_kg">kg</span>
+            </div>
+            <span class="ent-quota-subtext">Monthly Allocation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statutory Sample Quota Notice -->
+      <div class="entitlement-prototype-note">
+        <Icons name="info" size={18} class="text-primary" />
+        <p data-i18n="entitlement_quota_note">
+          Sample quantities for prototype demonstration. Actual amounts depend on your state and official rules.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions-row">
+        <button type="button" id="btn-entitlement-continue" class="btn btn-primary">
+          <span data-i18n="btn_goto_records">Continue to Record Deliveries</span>
+          <Icons name="arrow-right" size={18} />
+        </button>
+        <button type="button" id="btn-entitlement-back" class="btn btn-secondary">
+          <Icons name="arrow-left" size={18} />
+          <span data-i18n="btn_back">Back</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .entitlement-layout-container {
+    max-width: 900px;
+    margin: 2rem auto;
+  }
+
+  .card-head {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card-title {
+    font-size: 1.625rem;
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+
+  .beneficiary-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    padding: 0.875rem 1.25rem;
+    background: var(--color-surface-subtle);
+    border-radius: var(--radius-md);
+    align-items: center;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .meta-label {
+    color: var(--color-muted);
+  }
+
+  .category-meta-chip {
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Entitlement Grid */
+  .entitlement-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 680px) {
+    .entitlement-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .commodity-ent-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: transform var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .commodity-ent-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .ring-wrapper {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .progress-ring {
+    transform: rotate(-90deg);
+  }
+
+  .ring-bg {
+    fill: none;
+    stroke: var(--color-border);
+    stroke-width: 6;
+  }
+
+  .ring-fill {
+    fill: none;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s var(--ease-out);
+  }
+
+  .ring-wheat {
+    stroke: #EA580C;
+  }
+  .ring-rice {
+    stroke: var(--color-primary);
+  }
+  .ring-sugar {
+    stroke: #0284C7;
+  }
+
+  .ring-icon-center {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-amber { color: #EA580C; }
+  .text-blue { color: var(--color-primary); }
+  .text-teal { color: #0284C7; }
+
+  .ent-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .ent-commodity-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .ent-qty-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    margin: 0.25rem 0;
+  }
+
+  .ent-qty-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-primary);
+  }
+
+  .ent-qty-unit {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  .ent-quota-subtext {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .entitlement-prototype-note {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--color-primary-subtle);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-primary);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .form-actions-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .form-actions-row .btn {
+    flex: 1;
+  }
+</style>

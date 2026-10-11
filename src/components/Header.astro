@@ -1,0 +1,356 @@
+---
+import Icons from './Icons.astro';
+import { SITE_NAME, HELPLINE, HELPLINE_TEL } from '../data/constants';
+---
+
+<header class="gov-header" id="header">
+  <!-- Tricolor Indian national decorative ribbon (Decoration only) -->
+  <div class="tricolor-strip" aria-hidden="true">
+    <div class="band-saffron"></div>
+    <div class="band-white"></div>
+    <div class="band-green"></div>
+  </div>
+
+  <div class="container header-inner">
+    <!-- Brand / Department Slot -->
+    <div class="header-brand">
+      <!-- TODO: Department Logo Placeholder (Do not use official State Emblem/Ashoka Chakra) -->
+      <div class="dept-logo-placeholder" aria-label="Civil Supplies Department Symbol">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+
+      <div class="brand-titles">
+        <a href="#step-1" class="site-title-link" data-nav-step="1">
+          <span class="site-title" data-i18n="site_title">{SITE_NAME}</span>
+        </a>
+        <span class="site-subtitle" data-i18n="site_subtitle">Maharashtra Public Distribution System</span>
+      </div>
+    </div>
+
+    <!-- Desktop Navigation Menu -->
+    <nav class="header-nav" id="header-nav-menu" aria-label="Main Navigation">
+      <ul class="nav-list">
+        <li>
+          <a href="#step-1" class="nav-link" data-nav-step="1" data-i18n="nav_home">Home</a>
+        </li>
+        <li>
+          <a href="#step-3" class="nav-link" data-nav-step="3" data-i18n="nav_entitlement">Entitlement</a>
+        </li>
+        <li>
+          <a href="#step-4" class="nav-link" data-nav-step="4" data-i18n="nav_records">Records</a>
+        </li>
+        <li>
+          <a href="#report" class="nav-link" data-nav-step="5" data-i18n="nav_report">Report</a>
+        </li>
+        <li>
+          <a href="#faq-section" class="nav-link" data-i18n="nav_help">Help & Rights</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Header Utilities: Helpline, Language Switcher, Theme Toggle -->
+    <div class="header-actions">
+      <!-- Helpline 1967 Chip -->
+      <a href={HELPLINE_TEL} class="helpline-chip" aria-label={`National and State Ration Helpline ${HELPLINE}`}>
+        <Icons name="phone" size={16} />
+        <span class="helpline-text"><strong class="tabular-nums">1967</strong></span>
+      </a>
+
+      <!-- Language Switcher -->
+      <div class="lang-switcher-wrapper">
+        <label for="lang-select" class="sr-only" data-i18n="lang_switcher_label">Select language</label>
+        <select id="lang-select" class="lang-select" aria-label="Language / भाषा">
+          <option value="en">English (EN)</option>
+          <option value="mr">मराठी (MR)</option>
+          <option value="hi">हिन्दी (HI)</option>
+        </select>
+      </div>
+
+      <!-- Theme Toggle -->
+      <button
+        type="button"
+        id="theme-toggle-btn"
+        class="theme-toggle-btn"
+        aria-label="Switch theme"
+        aria-pressed="false"
+      >
+        <span class="theme-icon icon-sun" aria-hidden="true">
+          <Icons name="sun" size={18} />
+        </span>
+        <span class="theme-icon icon-moon" aria-hidden="true">
+          <Icons name="moon" size={18} />
+        </span>
+      </button>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        type="button"
+        id="mobile-menu-btn"
+        class="mobile-menu-btn"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="header-nav-menu"
+      >
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .gov-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--header-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--duration-normal) var(--ease-out),
+                border-color var(--duration-normal) var(--ease-out);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    gap: 1rem;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .dept-logo-placeholder {
+    width: 44px;
+    height: 44px;
+    background: var(--color-primary-subtle);
+    color: var(--color-primary);
+    border: 1.5px dashed var(--color-primary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .brand-titles {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .site-title-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .site-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .site-subtitle {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-list {
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    transition: color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary);
+    background-color: var(--color-surface-hover);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+  }
+
+  .helpline-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--color-accent-subtle);
+    color: var(--color-text);
+    border: 1px solid var(--color-accent);
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    transition: transform var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+    min-height: 40px;
+  }
+
+  .helpline-chip:hover {
+    transform: translateY(-1px);
+    background: var(--color-accent);
+    color: #0B1B33;
+  }
+
+  .lang-select {
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius-md);
+    background: var(--color-input-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 40px;
+  }
+
+  .theme-toggle-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    cursor: pointer;
+    position: relative;
+    transition: background-color var(--duration-fast) var(--ease-out),
+                color var(--duration-fast) var(--ease-out);
+  }
+
+  .theme-toggle-btn:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-primary);
+  }
+
+  .theme-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  [data-theme="dark"] .icon-sun {
+    display: flex;
+  }
+  [data-theme="dark"] .icon-moon {
+    display: none;
+  }
+  :root:not([data-theme="dark"]) .icon-sun {
+    display: none;
+  }
+  :root:not([data-theme="dark"]) .icon-moon {
+    display: flex;
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+
+  .hamburger-bar {
+    width: 18px;
+    height: 2px;
+    background-color: var(--color-text);
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 960px) {
+    .site-subtitle {
+      display: none;
+    }
+    .header-nav {
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: 1rem;
+      display: none;
+      box-shadow: var(--shadow-lg);
+    }
+    .header-nav.nav-open {
+      display: block;
+    }
+    .nav-list {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .nav-link {
+      width: 100%;
+      display: block;
+      padding: 0.75rem 1rem;
+    }
+    .mobile-menu-btn {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .helpline-chip .helpline-text {
+      font-size: 0.75rem;
+    }
+    .site-title {
+      font-size: 1.1rem;
+    }
+  }
+</style>

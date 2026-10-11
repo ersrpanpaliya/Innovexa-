@@ -1,0 +1,742 @@
+---
+import Icons from './Icons.astro';
+---
+
+<section id="step-4" class="wizard-step" aria-labelledby="step-4-heading" hidden>
+  <div class="records-layout-grid">
+    <!-- Main Left Area: Delivery Logging Form + Table + Complaint Evidence -->
+    <div class="records-main-col">
+      <!-- Card 1: Record Deliveries Form & Table -->
+      <div class="gov-card records-form-card">
+        <div class="card-head">
+          <h2 id="step-4-heading" class="card-title" data-i18n="records_title">
+            Record Received Deliveries
+          </h2>
+          <p class="card-subtitle" data-i18n="records_subtitle">
+            Log the commodities received from your Fair Price Shop (FPS) this month
+          </p>
+        </div>
+
+        <!-- Duplicate Entry Warning Banner -->
+        <div id="delivery-duplicate-warning" class="duplicate-warning-banner" role="alert" style="display: none;">
+          <Icons name="alert" size={18} class="text-warning" />
+          <span data-i18n="warn_duplicate">Warning: A delivery with this date, vendor ID, and commodity has already been recorded.</span>
+        </div>
+
+        <!-- Entry Form -->
+        <form id="delivery-entry-form" class="delivery-form-grid" onsubmit="return false;" novalidate>
+          <!-- Date Field -->
+          <div class="form-group">
+            <label for="del-date" class="form-label">
+              <span data-i18n="field_date">Distribution Date</span>
+              <span class="required-indicator" aria-hidden="true">*</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="date"
+                id="del-date"
+                name="delDate"
+                class="form-input"
+                required
+              />
+            </div>
+            <div id="error-del-date" class="field-error" role="alert" aria-live="polite"></div>
+          </div>
+
+          <!-- Vendor ID Field -->
+          <div class="form-group">
+            <label for="del-vendor" class="form-label">
+              <span data-i18n="field_vendor">Fair Price Shop / Vendor ID</span>
+              <span class="required-indicator" aria-hidden="true">*</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="del-vendor"
+                name="vendorId"
+                class="form-input"
+                data-i18n-attr="placeholder:field_vendor_ph"
+                placeholder="e.g. FPS-PUNE-104"
+                required
+              />
+            </div>
+            <div id="error-del-vendor" class="field-error" role="alert" aria-live="polite"></div>
+          </div>
+
+          <!-- Commodity Select Field -->
+          <div class="form-group">
+            <label for="del-commodity" class="form-label">
+              <span data-i18n="field_commodity">Commodity</span>
+              <span class="required-indicator" aria-hidden="true">*</span>
+            </label>
+            <div class="input-wrapper">
+              <select id="del-commodity" name="commodity" class="form-select">
+                <option value="Wheat">Wheat (गहू)</option>
+                <option value="Rice">Rice (तांदूळ)</option>
+                <option value="Sugar">Sugar (साखर)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Quantity Received Field -->
+          <div class="form-group">
+            <label for="del-qty" class="form-label">
+              <span data-i18n="field_quantity">Quantity Received (kg)</span>
+              <span class="required-indicator" aria-hidden="true">*</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="number"
+                id="del-qty"
+                name="quantity"
+                class="form-input tabular-nums"
+                step="0.05"
+                min="0"
+                placeholder="0.00"
+                required
+              />
+            </div>
+            <div id="error-del-qty" class="field-error" role="alert" aria-live="polite"></div>
+          </div>
+
+          <!-- Add / Edit Buttons -->
+          <div class="form-btn-actions">
+            <button type="button" id="btn-add-delivery" class="btn btn-primary">
+              <Icons name="check" size={18} />
+              <span data-i18n="btn_add_entry">Add Delivery Entry</span>
+            </button>
+            <button type="button" id="btn-cancel-edit" class="btn btn-secondary" style="display: none;">
+              <span data-i18n="btn_cancel_edit">Cancel Edit</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Delivery Records Table Wrap -->
+        <div class="table-section-header">
+          <h3 class="table-title">Recorded Delivery Logs</h3>
+          <button type="button" id="btn-clear-deliveries" class="btn btn-danger-outline btn-sm">
+            <Icons name="trash" size={14} />
+            <span data-i18n="btn_clear_all">Clear All Entries</span>
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="gov-table" aria-label="Logged Fair Price Shop Deliveries">
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="table_col_date">Date</th>
+                <th scope="col" data-i18n="table_col_vendor">Vendor ID</th>
+                <th scope="col" data-i18n="table_col_commodity">Commodity</th>
+                <th scope="col" data-i18n="table_col_quantity">Quantity</th>
+                <th scope="col" data-i18n="table_col_actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="deliveries-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Card 2: Complaint Evidence Tabs & Upload Zone -->
+      <div class="gov-card complaint-evidence-card">
+        <div class="card-head">
+          <h3 class="card-title" data-i18n="evidence_title">Complaint Verification & Evidence</h3>
+          <p class="card-subtitle" data-i18n="evidence_subtitle">
+            Attach verification details to support your grievance filing
+          </p>
+        </div>
+
+        <!-- Accessible Tablist -->
+        <div class="evidence-tabs" role="tablist" aria-label="Evidence Submission Modes">
+          <button
+            type="button"
+            id="tab-ev-img"
+            class="tab-btn"
+            role="tab"
+            aria-selected="true"
+            aria-controls="box-ev-img"
+          >
+            <Icons name="upload" size={16} />
+            <span data-i18n="tab_upload_img">Upload Image / Receipt</span>
+          </button>
+          <button
+            type="button"
+            id="tab-ev-id"
+            class="tab-btn"
+            role="tab"
+            aria-selected="false"
+            aria-controls="box-ev-id"
+          >
+            <Icons name="card" size={16} />
+            <span data-i18n="tab_ration_id">Ration ID Verification</span>
+          </button>
+        </div>
+
+        <!-- Tab Panel 1: Drag & Drop Image Upload -->
+        <div id="box-ev-img" class="tab-panel" role="tabpanel" aria-labelledby="tab-ev-img">
+          <div id="ev-drop-zone" class="file-drop-zone" tabindex="0" role="button" aria-label="Drop receipt image or click to browse">
+            <input
+              type="file"
+              id="ev-file-input"
+              class="sr-only"
+              accept="image/*"
+              aria-describedby="file-size-hint"
+            />
+            <div class="drop-zone-content">
+              <div class="drop-zone-icon"><Icons name="upload" size={36} /></div>
+              <p class="drop-zone-prompt">
+                <span data-i18n="drag_drop_text">Drag and drop cash memo / weighing photo here, or</span>
+                <label for="ev-file-input" class="browse-link" data-i18n="drag_drop_browse">Browse File</label>
+              </p>
+              <span id="file-size-hint" class="file-hint-text" data-i18n="file_limit_hint">
+                Accepts JPG, PNG, WebP up to 3 MB
+              </span>
+            </div>
+          </div>
+
+          <!-- Uploaded Preview Box -->
+          <div id="ev-preview-box" class="file-preview-card" style="display: none;">
+            <div class="preview-img-wrap">
+              <img id="ev-preview-img" alt="Uploaded grievance receipt preview" />
+            </div>
+            <div class="preview-meta">
+              <span id="ev-preview-name" class="preview-filename">evidence.jpg</span>
+              <button type="button" id="btn-remove-evidence-file" class="btn-remove-file" aria-label="Remove uploaded image">
+                <Icons name="trash" size={16} /> Remove
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Panel 2: Ration ID Reference -->
+        <div id="box-ev-id" class="tab-panel" role="tabpanel" aria-labelledby="tab-ev-id" hidden>
+          <div class="form-group">
+            <label for="ev-ration-id-input" class="form-label" data-i18n="field_ev_ration_id">
+              Ration ID for Verification
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="ev-ration-id-input"
+                class="form-input"
+                placeholder="e.g. RC-MH-400102"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Citizen Remarks / Description Field -->
+        <div class="form-group" style="margin-top: 1.5rem;">
+          <label for="comp-remarks" class="form-label" data-i18n="field_remarks">
+            Grievance Remarks / Description of Irregularity
+          </label>
+          <textarea
+            id="comp-remarks"
+            class="form-textarea"
+            rows="3"
+            data-i18n-attr="placeholder:field_remarks_ph"
+            placeholder="Describe shortage in weight, refusal of receipt, overcharging, poor grain quality, or dealer misconduct..."
+          ></textarea>
+        </div>
+
+        <!-- Step Navigation Buttons -->
+        <div class="form-actions-row">
+          <button type="button" id="btn-goto-report" class="btn btn-success">
+            <Icons name="shield" size={18} />
+            <span data-i18n="btn_generate_report">Generate Final Report</span>
+          </button>
+          <button type="button" id="btn-records-back" class="btn btn-secondary">
+            <Icons name="arrow-left" size={18} />
+            <span data-i18n="btn_back">Back</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky Side Panel: Live Received vs Entitled Quota -->
+    <aside class="records-side-panel">
+      <div class="gov-card sticky-comparison-panel">
+        <div class="panel-head">
+          <h3 class="panel-title" data-i18n="panel_comparison_title">Live Received vs Entitled Quota</h3>
+          <span class="panel-badge">Real-Time Audit</span>
+        </div>
+
+        <div class="live-progress-list">
+          <!-- Wheat Progress -->
+          <div class="live-item">
+            <div class="live-item-header">
+              <div class="item-name-group">
+                <Icons name="wheat" size={18} class="text-amber" />
+                <span class="item-name" data-i18n="commodity_wheat">Wheat</span>
+              </div>
+              <span id="live-badge-wheat" class="status-chip status-warning">Shortage</span>
+            </div>
+            <div class="progress-bar-track" aria-hidden="true">
+              <div id="live-progress-wheat" class="progress-bar-fill bar-wheat" style="width: 0%;"></div>
+            </div>
+            <div class="live-item-footer">
+              <span id="live-stat-wheat" class="live-stat-text tabular-nums">0.0 / 10 kg (0%)</span>
+            </div>
+          </div>
+
+          <!-- Rice Progress -->
+          <div class="live-item">
+            <div class="live-item-header">
+              <div class="item-name-group">
+                <Icons name="rice" size={18} class="text-blue" />
+                <span class="item-name" data-i18n="commodity_rice">Rice</span>
+              </div>
+              <span id="live-badge-rice" class="status-chip status-warning">Shortage</span>
+            </div>
+            <div class="progress-bar-track" aria-hidden="true">
+              <div id="live-progress-rice" class="progress-bar-fill bar-rice" style="width: 0%;"></div>
+            </div>
+            <div class="live-item-footer">
+              <span id="live-stat-rice" class="live-stat-text tabular-nums">0.0 / 9 kg (0%)</span>
+            </div>
+          </div>
+
+          <!-- Sugar Progress -->
+          <div class="live-item">
+            <div class="live-item-header">
+              <div class="item-name-group">
+                <Icons name="sugar" size={18} class="text-teal" />
+                <span class="item-name" data-i18n="commodity_sugar">Sugar</span>
+              </div>
+              <span id="live-badge-sugar" class="status-chip status-warning">Shortage</span>
+            </div>
+            <div class="progress-bar-track" aria-hidden="true">
+              <div id="live-progress-sugar" class="progress-bar-fill bar-sugar" style="width: 0%;"></div>
+            </div>
+            <div class="live-item-footer">
+              <span id="live-stat-sugar" class="live-stat-text tabular-nums">0.0 / 5 kg (0%)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-helpline-reminder">
+          <Icons name="phone" size={16} />
+          <span>Shortage noticed? Dial <a href="tel:1967" class="helpline-link">1967</a> immediately.</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .records-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  @media (min-width: 960px) {
+    .records-layout-grid {
+      grid-template-columns: 1.35fr 0.65fr;
+      align-items: start;
+    }
+  }
+
+  .records-main-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .duplicate-warning-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--color-warning-bg);
+    border: 1px solid var(--color-warning);
+    color: var(--color-text);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .delivery-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 600px) {
+    .delivery-form-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .form-btn-actions {
+      grid-column: span 2;
+    }
+  }
+
+  .form-btn-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .table-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .table-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .btn-sm {
+    min-height: 36px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8125rem;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .gov-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    text-align: left;
+  }
+
+  .gov-table th {
+    background-color: var(--color-surface-subtle);
+    color: var(--color-text);
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--color-border);
+    white-space: nowrap;
+  }
+
+  .gov-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+    color: var(--color-text);
+  }
+
+  .gov-table tr:hover {
+    background-color: var(--color-surface-hover);
+  }
+
+  .btn-action {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .btn-action-edit {
+    color: var(--color-primary);
+  }
+  .btn-action-edit:hover {
+    background-color: var(--color-primary-subtle);
+  }
+
+  .btn-action-delete {
+    color: var(--color-danger);
+  }
+  .btn-action-delete:hover {
+    background-color: var(--color-danger-bg);
+  }
+
+  /* Evidence Tabs */
+  .evidence-tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: 1.5rem;
+  }
+
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--color-muted);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    margin-bottom: -2px;
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .tab-btn[aria-selected="true"] {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+  }
+
+  /* File Drop Zone */
+  .file-drop-zone {
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface-subtle);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .file-drop-zone:hover,
+  .file-drop-zone.drag-active {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-subtle);
+  }
+
+  .drop-zone-icon {
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .drop-zone-prompt {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .browse-link {
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 0.25rem;
+  }
+
+  .file-hint-text {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .file-preview-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .preview-img-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid var(--color-border);
+  }
+
+  .preview-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .preview-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+  }
+
+  .preview-filename {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    word-break: break-all;
+  }
+
+  .btn-remove-file {
+    background: transparent;
+    border: none;
+    color: var(--color-danger);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0;
+    align-self: flex-start;
+  }
+
+  /* Sticky Side Panel */
+  .sticky-comparison-panel {
+    position: sticky;
+    top: 92px;
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .panel-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .panel-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    background: var(--color-primary-subtle);
+    color: var(--color-primary);
+    border-radius: var(--radius-sm);
+  }
+
+  .live-progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .live-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .live-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .item-name-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .status-warning {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+    border: 1px solid var(--color-warning);
+  }
+  .status-success {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+  }
+  .status-info {
+    background: var(--color-primary-subtle);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+  }
+
+  .progress-bar-track {
+    width: 100%;
+    height: 10px;
+    background-color: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width var(--duration-medium) var(--ease-out);
+  }
+
+  .bar-wheat { background-color: #EA580C; }
+  .bar-rice { background-color: var(--color-primary); }
+  .bar-sugar { background-color: #0284C7; }
+
+  .live-item-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .live-stat-text {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    font-weight: 600;
+  }
+
+  .panel-helpline-reminder {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--color-surface-subtle);
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .helpline-link {
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  .form-actions-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .form-actions-row .btn {
+    flex: 1;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>

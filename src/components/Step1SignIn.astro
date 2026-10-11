@@ -1,0 +1,955 @@
+---
+import Icons from './Icons.astro';
+import { HELPLINE_TEL } from '../../src/data/constants';
+---
+
+<section id="step-1" class="wizard-step active" aria-labelledby="step-1-heading">
+  <div class="step-hero-split">
+    <!-- Left Column: 3D Hero + Trust Badges + Headline -->
+    <div class="hero-left-col">
+      <div class="badge-govt-seal">
+        <Icons name="shield" size={16} />
+        <span data-i18n="hero_badge_govt">Food & Civil Supplies Portal</span>
+      </div>
+
+      <h1 id="step-1-heading" class="hero-main-title" data-i18n="hero_title">
+        Verify Your Monthly Foodgrain Entitlement
+      </h1>
+
+      <p class="hero-description" data-i18n="hero_desc">
+        Empowering ration card beneficiaries across Maharashtra. Calculate your exact statutory grain quota, track fair price shop deliveries, and generate official shortage grievance reports for immediate resolution.
+      </p>
+
+      <!-- 3D Hero Canvas Container with Accessible Alternative -->
+      <div class="three-hero-wrapper">
+        <div id="three-hero-container" class="three-hero-container" aria-hidden="true">
+          <!-- Fallback Static Illustration (CSS-3D / SVG) for low-end / reduced motion -->
+          <div class="fallback-card-visual" aria-hidden="true">
+            <div class="fallback-card-mesh">
+              <div class="fallback-card-top-strip"></div>
+              <div class="fallback-card-chip"></div>
+              <div class="fallback-card-text">
+                <strong>MAHARASHTRA PDS</strong>
+                <span>RC-MH-400102-2026</span>
+              </div>
+              <div class="fallback-floating-grains">
+                <span class="fallback-grain-wheat"><Icons name="wheat" size={24} /></span>
+                <span class="fallback-grain-rice"><Icons name="rice" size={22} /></span>
+                <span class="fallback-grain-sugar"><Icons name="sugar" size={22} /></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accessible text alternative for screen readers -->
+        <p class="sr-only" data-i18n="hero_alt_text">
+          3D interactive visualization displaying an official ration smart card surrounded by wheat sheaves, rice grains, and sugar cubes symbolizing transparent food distribution.
+        </p>
+      </div>
+
+      <!-- Trust Badges Grid -->
+      <div class="hero-trust-grid">
+        <div class="trust-badge">
+          <Icons name="shield" size={18} class="text-primary" />
+          <span data-i18n="hero_trust_privacy">100% Client-Side Privacy</span>
+        </div>
+        <div class="trust-badge">
+          <Icons name="phone" size={18} class="text-accent" />
+          <span data-i18n="hero_trust_helpline">Direct Redressal: 1967</span>
+        </div>
+        <div class="trust-badge">
+          <Icons name="check" size={18} class="text-success" />
+          <span data-i18n="hero_trust_standard">GIGW & WCAG 2.1 AA Compliant</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Sign-In Card -->
+    <div class="hero-right-col">
+      <div class="gov-card signin-card">
+        <div class="card-header-block">
+          <h2 class="card-title" data-i18n="signin_card_title">Beneficiary Sign In</h2>
+          <p class="card-subtitle" data-i18n="signin_card_subtitle">
+            Enter your credentials to access your ration dashboard
+          </p>
+        </div>
+
+        <form id="signin-form" class="signin-form" onsubmit="return false;" novalidate>
+          <!-- Username Field -->
+          <div class="form-group">
+            <label for="login-username" class="form-label">
+              <span data-i18n="signin_username_label">Username / Aadhaar or Ration User ID</span>
+              <span class="required-indicator" aria-hidden="true">*</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="login-username"
+                name="username"
+                class="form-input"
+                data-i18n-attr="placeholder:signin_username_placeholder"
+                placeholder="e.g. mh_citizen_4001"
+                autocomplete="username"
+                required
+              />
+            </div>
+            <div id="error-login-username" class="field-error" role="alert" aria-live="polite"></div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="login-password" class="form-label">
+              <span data-i18n="signin_password_label">Password</span>
+              <span class="required-indicator" aria-hidden="true">*</span>
+            </label>
+            <div class="input-wrapper password-wrapper">
+              <input
+                type="password"
+                id="login-password"
+                name="password"
+                class="form-input"
+                data-i18n-attr="placeholder:signin_password_placeholder"
+                placeholder="Enter your secure password"
+                autocomplete="current-password"
+                required
+              />
+              <button
+                type="button"
+                id="toggle-password-btn"
+                class="password-toggle-btn"
+                aria-label="Show password"
+                data-i18n-aria="signin_password_show"
+              >
+                <span class="icon-eye"><Icons name="eye" size={18} /></span>
+                <span class="icon-eye-off"><Icons name="eye-off" size={18} /></span>
+              </button>
+            </div>
+
+            <!-- Caps Lock Alert -->
+            <div id="caps-lock-hint" class="caps-lock-hint" role="status" aria-live="polite">
+              <Icons name="alert" size={14} />
+              <span data-i18n="signin_capslock_warning">Warning: Caps Lock is ON</span>
+            </div>
+
+            <!-- Password Error -->
+            <div id="error-login-password" class="field-error" role="alert" aria-live="polite"></div>
+
+            <!-- Live Password Rules Checklist -->
+            <div class="password-rules-checklist" aria-label="Password Criteria">
+              <div class="rule-item" id="rule-length">
+                <span class="rule-dot"></span>
+                <span data-i18n="rule_length">At least 8 characters long</span>
+              </div>
+              <div class="rule-item" id="rule-uppercase">
+                <span class="rule-dot"></span>
+                <span data-i18n="rule_uppercase">At least one uppercase letter (A-Z)</span>
+              </div>
+              <div class="rule-item" id="rule-special">
+                <span class="rule-dot"></span>
+                <span data-i18n="rule_special">At least one special character (!@#$%^&*...)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="button" id="btn-signin" class="btn btn-primary btn-block">
+            <span data-i18n="btn_signin">Sign In to Dashboard</span>
+            <Icons name="arrow-right" size={18} />
+          </button>
+
+          <!-- Prototype Mode Notice Note -->
+          <div class="prototype-note-box">
+            <Icons name="info" size={16} />
+            <p data-i18n="signin_prototype_note">
+              Prototype authentication: enter any username meeting the password criteria above. No live server credentials required.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: How It Works (3 Steps) -->
+  <section class="how-it-works-section" aria-labelledby="hiw-title">
+    <div class="section-heading-center">
+      <h2 id="hiw-title" class="section-title" data-i18n="how_it_works_title">How Ration Saathi Works</h2>
+      <p class="section-subtitle" data-i18n="how_it_works_subtitle">
+        Three simple steps to safeguard your legal food security entitlement
+      </p>
+    </div>
+
+    <div class="hiw-grid">
+      <!-- Step 1 Card -->
+      <div class="gov-card hiw-card">
+        <div class="step-num-badge" data-i18n="step_badge_1">Step 1</div>
+        <div class="hiw-icon-wrap"><Icons name="card" size={28} /></div>
+        <h3 class="hiw-step-title" data-i18n="step_desc_1_title">Check Your Entitlement</h3>
+        <p class="hiw-step-text" data-i18n="step_desc_1_text">
+          Select your ration card category (Orange, Yellow, White, or AAY) to see your exact statutory grain quota.
+        </p>
+      </div>
+
+      <!-- Step 2 Card -->
+      <div class="gov-card hiw-card">
+        <div class="step-num-badge" data-i18n="step_badge_2">Step 2</div>
+        <div class="hiw-icon-wrap"><Icons name="calendar" size={28} /></div>
+        <h3 class="hiw-step-title" data-i18n="step_desc_2_title">Log Received Supplies</h3>
+        <p class="hiw-step-text" data-i18n="step_desc_2_text">
+          Enter the actual quantity of Wheat, Rice, and Sugar distributed to you at your Fair Price Shop (FPS).
+        </p>
+      </div>
+
+      <!-- Step 3 Card -->
+      <div class="gov-card hiw-card">
+        <div class="step-num-badge" data-i18n="step_badge_3">Step 3</div>
+        <div class="hiw-icon-wrap"><Icons name="shield" size={28} /></div>
+        <h3 class="hiw-step-title" data-i18n="step_desc_3_title">File Formal Discrepancy</h3>
+        <p class="hiw-step-text" data-i18n="step_desc_3_text">
+          Generate a verified discrepancy audit report with auto reference number to submit to the Food Distribution Officer or call 1967.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: 5 Consumer Rights (3D Tilt Cards) -->
+  <section class="consumer-rights-section" aria-labelledby="rights-title">
+    <div class="section-heading-center">
+      <h2 id="rights-title" class="section-title" data-i18n="rights_title">
+        Your 5 Consumer Rights Under NFSA
+      </h2>
+      <p class="section-subtitle" data-i18n="rights_subtitle">
+        Protected under the National Food Security Act & Government of Maharashtra PDS Regulations
+      </p>
+    </div>
+
+    <div class="rights-grid">
+      <!-- Right 1 -->
+      <div class="gov-card tilt-card right-card" style="border-left: 4px solid var(--color-primary);">
+        <div class="right-icon-row">
+          <Icons name="wheat" size={24} />
+          <span class="right-badge">NFSA Sec 3</span>
+        </div>
+        <h3 class="right-title" data-i18n="right_1_title">Right to Food</h3>
+        <p class="right-desc" data-i18n="right_1_desc">
+          Every eligible household is legally guaranteed subsidised foodgrains every month without arbitrary refusal.
+        </p>
+      </div>
+
+      <!-- Right 2 -->
+      <div class="gov-card tilt-card right-card" style="border-left: 4px solid var(--color-accent);">
+        <div class="right-icon-row">
+          <Icons name="shield" size={24} />
+          <span class="right-badge">ePoS Mandate</span>
+        </div>
+        <h3 class="right-title" data-i18n="right_2_title">Right to Correct Quantity</h3>
+        <p class="right-desc" data-i18n="right_2_desc">
+          The Fair Price Shop dealer must weigh grains on an electronic Point of Sale (ePoS) weighing scale accurately.
+        </p>
+      </div>
+
+      <!-- Right 3 -->
+      <div class="gov-card tilt-card right-card" style="border-left: 4px solid var(--color-success);">
+        <div class="right-icon-row">
+          <Icons name="check" size={24} />
+          <span class="right-badge">Statutory Rate</span>
+        </div>
+        <h3 class="right-title" data-i18n="right_3_title">Right to Fair Price</h3>
+        <p class="right-desc" data-i18n="right_3_desc">
+          Beneficiaries must pay strictly the government-fixed subsidised rate. Demanding excess commission is illegal.
+        </p>
+      </div>
+
+      <!-- Right 4 -->
+      <div class="gov-card tilt-card right-card" style="border-left: 4px solid #6366F1;">
+        <div class="right-icon-row">
+          <Icons name="info" size={24} />
+          <span class="right-badge">Transparency</span>
+        </div>
+        <h3 class="right-title" data-i18n="right_4_title">Right to Information</h3>
+        <p class="right-desc" data-i18n="right_4_desc">
+          FPS must prominently display stock boards, retail prices, sample commodity bags, and vigilance committee lists.
+        </p>
+      </div>
+
+      <!-- Right 5 -->
+      <div class="gov-card tilt-card right-card" style="border-left: 4px solid var(--color-danger);">
+        <div class="right-icon-row">
+          <Icons name="phone" size={24} />
+          <span class="right-badge">Toll-Free 1967</span>
+        </div>
+        <h3 class="right-title" data-i18n="right_5_title">Right to Complain</h3>
+        <p class="right-desc" data-i18n="right_5_desc">
+          Immediate recourse via Toll-Free 1967 or the District Grievance Redressal Officer (DGRO) for shortages or corruption.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Ration Card Rules Checklist + Helpline Card -->
+  <section class="rules-helpline-grid">
+    <!-- Left: Rules Checklist -->
+    <div class="gov-card rules-card">
+      <div class="card-head-row">
+        <Icons name="shield" size={22} class="text-primary" />
+        <h3 class="card-head-title" data-i18n="rules_title">Essential Ration Card Guidelines</h3>
+      </div>
+      <ul class="rules-checklist">
+        <li class="rule-check-item">
+          <span class="check-icon"><Icons name="check" size={16} /></span>
+          <span data-i18n="rule_item_1">Carry and produce your active ration card or linked Aadhaar biometric authentication at the FPS.</span>
+        </li>
+        <li class="rule-check-item">
+          <span class="check-icon"><Icons name="check" size={16} /></span>
+          <span data-i18n="rule_item_2">Never pay more than the statutory government rate stamped on the cash memo receipt.</span>
+        </li>
+        <li class="rule-check-item">
+          <span class="check-icon"><Icons name="check" size={16} /></span>
+          <span data-i18n="rule_item_3">Do not accept underweight bags or allow the dealer to deduct grain quantities on arbitrary grounds.</span>
+        </li>
+        <li class="rule-check-item">
+          <span class="check-icon"><Icons name="check" size={16} /></span>
+          <span data-i18n="rule_item_4">Shop dealers cannot force you to buy non-PDS items (like soaps, tea, or salt) to get your grains.</span>
+        </li>
+        <li class="rule-check-item">
+          <span class="check-icon"><Icons name="check" size={16} /></span>
+          <span data-i18n="rule_item_5">Demand a printed ePoS transaction slip for every transaction and report irregularities immediately.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right: Prominent Helpline Card -->
+    <div class="gov-card helpline-feature-card">
+      <div class="helpline-feature-inner">
+        <div class="helpline-icon-large">
+          <Icons name="phone" size={36} />
+        </div>
+        <h3 class="helpline-feature-title" data-i18n="helpline_card_title">
+          Grievance Redressal Toll-Free Helpline: 1967
+        </h3>
+        <p class="helpline-feature-text" data-i18n="helpline_card_desc">
+          Report Fair Price Shop irregularities, biometric failures, overcharging, or distribution delays to the Food & Civil Supplies Department.
+        </p>
+        <a href={HELPLINE_TEL} class="btn btn-primary helpline-call-btn">
+          <Icons name="phone" size={18} />
+          <span data-i18n="helpline_btn_call">Call Helpline 1967</span>
+        </a>
+        <div class="helpline-timing-pill" data-i18n="helpline_timing">
+          Operational 7:00 AM to 8:00 PM (All working days)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: FAQ Accordion (flagged TODO for official content) -->
+  <!-- TODO: Official Department FAQ content to be reviewed and certified by District Supply Officer -->
+  <section class="faq-accordion-section" id="faq-section" aria-labelledby="faq-title">
+    <div class="section-heading-center">
+      <h2 id="faq-title" class="section-title" data-i18n="faq_title">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary class="faq-summary">
+          <span class="faq-question" data-i18n="faq_q1">What should I do if the ration dealer gives me less quantity than entitled?</span>
+          <span class="faq-chevron" aria-hidden="true"><Icons name="chevron-down" size={16} /></span>
+        </summary>
+        <div class="faq-answer">
+          <p data-i18n="faq_a1">
+            Log your received amount in this portal, generate your Discrepancy Report, and immediately dial 1967 or submit the report to your local Tahsildar / Food Distribution Office.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-summary">
+          <span class="faq-question" data-i18n="faq_q2">Can the Fair Price Shop owner refuse ration if biometric verification fails?</span>
+          <span class="faq-chevron" aria-hidden="true"><Icons name="chevron-down" size={16} /></span>
+        </summary>
+        <div class="faq-answer">
+          <p data-i18n="faq_a2">
+            No. Under Maharashtra PDS guidelines, if biometric failure occurs, alternative authentication through OTP on registered mobile or nominee verification must be facilitated.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-summary">
+          <span class="faq-question" data-i18n="faq_q3">Is there any charge for filing a ration shortage complaint?</span>
+          <span class="faq-chevron" aria-hidden="true"><Icons name="chevron-down" size={16} /></span>
+        </summary>
+        <div class="faq-answer">
+          <p data-i18n="faq_a3">
+            No. Filing complaints through helpline 1967 or the public grievance portal is completely free of cost for all citizens.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+</section>
+
+<style>
+  .step-hero-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin: 2rem 0 3rem;
+  }
+
+  @media (min-width: 960px) {
+    .step-hero-split {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3rem;
+    }
+  }
+
+  /* Left Column */
+  .badge-govt-seal {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-full);
+    background: var(--color-primary-subtle);
+    color: var(--color-primary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-primary);
+  }
+
+  .hero-main-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-description {
+    font-size: 1.0625rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  /* 3D Canvas Container */
+  .three-hero-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .three-hero-container {
+    width: 100%;
+    height: 320px;
+    border-radius: var(--radius-lg);
+    background: var(--hero-card-gradient);
+    border: 1px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Fallback static illustration */
+  .fallback-card-visual {
+    display: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .three-hero-container.fallback-mode .fallback-card-visual {
+    display: flex;
+  }
+
+  .fallback-card-mesh {
+    width: 280px;
+    height: 175px;
+    background: var(--color-surface);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .fallback-card-top-strip {
+    height: 6px;
+    width: 100%;
+    background: linear-gradient(90deg, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%);
+    border-radius: 2px;
+  }
+
+  .fallback-card-chip {
+    width: 42px;
+    height: 30px;
+    background: #EAB308;
+    border: 1px solid #CA8A04;
+    border-radius: 4px;
+  }
+
+  .fallback-card-text {
+    font-size: 0.8125rem;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text);
+  }
+
+  .fallback-floating-grains {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    display: flex;
+    gap: 0.5rem;
+    color: var(--color-accent);
+  }
+
+  /* Trust Badges */
+  .hero-trust-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 600px) {
+    .hero-trust-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-surface);
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  /* Sign-in Card */
+  .signin-card {
+    border-top: 4px solid var(--color-primary);
+  }
+
+  .card-header-block {
+    margin-bottom: 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .password-wrapper {
+    position: relative;
+  }
+
+  .password-toggle-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--color-muted);
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+  }
+
+  .password-toggle-btn:hover {
+    color: var(--color-primary);
+  }
+
+  .icon-eye-off {
+    display: none;
+  }
+  .password-toggle-btn.showing .icon-eye {
+    display: none;
+  }
+  .password-toggle-btn.showing .icon-eye-off {
+    display: flex;
+  }
+
+  .caps-lock-hint {
+    display: none;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--color-warning);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 0.25rem;
+  }
+  .caps-lock-hint.active {
+    display: flex;
+  }
+
+  .password-rules-checklist {
+    background: var(--color-surface-subtle);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.8125rem;
+  }
+
+  .rule-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-muted);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .rule-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-muted);
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .rule-item.valid {
+    color: var(--color-success);
+    font-weight: 600;
+  }
+
+  .rule-item.valid .rule-dot {
+    background-color: var(--color-success);
+  }
+
+  .btn-block {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .prototype-note-box {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: var(--color-primary-subtle);
+    border-radius: var(--radius-md);
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  /* How It Works */
+  .how-it-works-section {
+    margin: 4rem 0 3rem;
+  }
+
+  .section-heading-center {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+
+  .hiw-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .hiw-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .hiw-card {
+    position: relative;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .step-num-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--color-primary-subtle);
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .hiw-icon-wrap {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+
+  .hiw-step-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .hiw-step-text {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Consumer Rights */
+  .consumer-rights-section {
+    margin: 4rem 0 3rem;
+  }
+
+  .rights-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .rights-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .rights-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .rights-grid .right-card:nth-child(4) {
+      grid-column: span 1;
+    }
+  }
+
+  .right-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .right-icon-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-primary);
+  }
+
+  .right-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    background: var(--badge-bg);
+    border-radius: var(--radius-sm);
+    color: var(--color-muted);
+  }
+
+  .right-title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .right-desc {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Rules & Helpline */
+  .rules-helpline-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+
+  @media (min-width: 840px) {
+    .rules-helpline-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+
+  .card-head-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card-head-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .rules-checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .rule-check-item {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text);
+  }
+
+  .check-icon {
+    color: var(--color-success);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .helpline-feature-card {
+    background: var(--color-surface);
+    border: 2px dashed var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .helpline-feature-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .helpline-icon-large {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent-subtle);
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .helpline-feature-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .helpline-feature-text {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    max-width: 320px;
+  }
+
+  .helpline-call-btn {
+    padding: 0.75rem 2rem;
+    font-size: 1.0625rem;
+  }
+
+  .helpline-timing-pill {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    background: var(--badge-bg);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-full);
+  }
+
+  /* FAQ Accordion */
+  .faq-accordion-section {
+    margin: 3rem 0 4rem;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .faq-item[open] {
+    border-color: var(--color-primary);
+  }
+
+  .faq-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    list-style: none;
+    color: var(--color-text);
+    user-select: none;
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-chevron {
+    color: var(--color-muted);
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.25rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    border-top: 1px solid var(--color-border-subtle);
+    padding-top: 0.75rem;
+  }
+</style>

@@ -1,0 +1,430 @@
+---
+import Icons from './Icons.astro';
+import { DEPARTMENT_NAME, HELPLINE } from '../data/constants';
+---
+
+<section id="step-5" class="wizard-step" aria-labelledby="step-5-heading" hidden>
+  <div class="report-layout-container">
+    <div class="gov-card formal-report-docket" id="printable-report">
+      <!-- Official Maharashtra PDS Header Banner -->
+      <div class="report-official-header">
+        <div class="report-tricolor-accent" aria-hidden="true"></div>
+        <div class="report-header-text">
+          <span class="report-state-tag">GOVERNMENT OF MAHARASHTRA</span>
+          <h2 id="step-5-heading" class="report-main-title" data-i18n="report_title">
+            Official Ration Discrepancy Grievance Report
+          </h2>
+          <p class="report-dept-subtext" data-i18n="report_dept">
+            {DEPARTMENT_NAME}
+          </p>
+        </div>
+
+        <!-- Docket Reference & Timestamp Block -->
+        <div class="report-meta-grid">
+          <div class="meta-box">
+            <span class="meta-label" data-i18n="report_ref_label">Grievance Reference Number:</span>
+            <strong id="rep-meta-ref" class="meta-value tabular-nums">RS-20261011-XXXX</strong>
+          </div>
+          <div class="meta-box">
+            <span class="meta-label" data-i18n="report_date_label">Report Generated:</span>
+            <span id="rep-meta-date" class="meta-value tabular-nums">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Beneficiary Particulars Block -->
+      <div class="report-section-block">
+        <h3 class="section-title-sm" data-i18n="report_beneficiary_details">Beneficiary Particulars</h3>
+        <div class="beneficiary-particulars-grid">
+          <div class="part-item">
+            <span class="part-label" data-i18n="report_beneficiary_name">Beneficiary Name</span>
+            <strong id="rep-beneficiary-name" class="part-val">—</strong>
+          </div>
+          <div class="part-item">
+            <span class="part-label" data-i18n="report_beneficiary_id">Ration Card Number</span>
+            <span id="rep-beneficiary-id" class="part-val tabular-nums">—</span>
+          </div>
+          <div class="part-item">
+            <span class="part-label" data-i18n="report_beneficiary_mobile">Registered Mobile</span>
+            <span id="rep-beneficiary-mobile" class="part-val tabular-nums">—</span>
+          </div>
+          <div class="part-item">
+            <span class="part-label" data-i18n="report_beneficiary_category">Card Category</span>
+            <span id="rep-beneficiary-category" class="part-val">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fair Price Shop Transaction Logs Table -->
+      <div class="report-section-block">
+        <h3 class="section-title-sm" data-i18n="report_tx_logs">Fair Price Shop Transaction Logs</h3>
+        <div class="table-wrap">
+          <table class="gov-table" aria-label="Transaction Logs">
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="table_col_date">Date</th>
+                <th scope="col" data-i18n="table_col_vendor">Vendor ID</th>
+                <th scope="col" data-i18n="table_col_commodity">Item</th>
+                <th scope="col" data-i18n="table_col_quantity">Quantity Received</th>
+              </tr>
+            </thead>
+            <tbody id="rep-tx-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Entitlement vs Recorded Comparison Table -->
+      <div class="report-section-block">
+        <h3 class="section-title-sm" data-i18n="report_comparison_table">
+          Statutory Entitlement vs Actually Recorded Delivery
+        </h3>
+        <div class="table-wrap">
+          <table class="gov-table comparison-audit-table" aria-label="Entitlement vs Recorded Audit">
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="col_item">Item</th>
+                <th scope="col" data-i18n="col_expected">Expected (Statutory)</th>
+                <th scope="col" data-i18n="col_recorded">Recorded</th>
+                <th scope="col" data-i18n="col_diff">Difference</th>
+                <th scope="col" data-i18n="col_status">Audit Status</th>
+              </tr>
+            </thead>
+            <tbody id="rep-comp-tbody">
+              <!-- Dynamically populated with status chips: Shortage indicated, Matches, Above expected -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Comparison Bar Chart Visualizer -->
+      <div class="report-section-block">
+        <h3 class="section-title-sm" data-i18n="report_chart_title">
+          Quota Comparison Audit Visualizer
+        </h3>
+        <div id="report-comparison-chart" class="report-chart-box">
+          <!-- Animated Bar chart dynamically injected by app.ts -->
+        </div>
+      </div>
+
+      <!-- Complaint Evidence Block -->
+      <div class="report-section-block" id="rep-evidence-section" style="display: none;">
+        <h3 class="section-title-sm" data-i18n="report_evidence_heading">Submitted Grievance Evidence</h3>
+
+        <div id="rep-ev-img-wrap" class="evidence-proof-item" style="display: none;">
+          <span class="proof-label" data-i18n="report_evidence_img">Uploaded Transaction Memo / Proof</span>
+          <div class="proof-img-container">
+            <img id="rep-ev-img" alt="Grievance Evidence Attachment" />
+          </div>
+        </div>
+
+        <div id="rep-ev-id-wrap" class="evidence-proof-item" style="display: none;">
+          <span class="proof-label" data-i18n="report_evidence_id">Verified Ration ID Reference</span>
+          <strong id="rep-ev-id-val" class="proof-id-text tabular-nums">—</strong>
+        </div>
+
+        <div id="rep-ev-remarks-wrap" class="evidence-proof-item" style="display: none;">
+          <span class="proof-label" data-i18n="report_evidence_remarks">Citizen Statement / Grievance Remarks</span>
+          <p id="rep-ev-remarks-val" class="proof-remarks-box">—</p>
+        </div>
+      </div>
+
+      <!-- Consumer Rights Summary Box -->
+      <div class="report-rights-summary-block">
+        <h4 class="rights-summary-heading">National Food Security Act (NFSA) - Citizen Entitlement Protection</h4>
+        <p class="rights-summary-text">
+          Under Section 15 & Section 16 of the NFSA, ration beneficiaries possess statutory entitlement to full grain weight, accurate electronic weighing, statutory price protection, and immediate grievance redressal via State PDS Helpline <strong>{HELPLINE}</strong>.
+        </p>
+      </div>
+
+      <!-- Statutory Verification Disclaimer Note -->
+      <div class="report-disclaimer-note">
+        <Icons name="info" size={18} class="text-primary" />
+        <p data-i18n="report_disclaimer">
+          Statutory Notice: Difference = Statutory Expected − Recorded Delivery. Classifications are generated from citizen delivery logs and are pending official verification by the District Supply Officer / Food Distribution Officer under Section 15 of NFSA. Official Helpline: 1967.
+        </p>
+      </div>
+    </div>
+
+    <!-- Action Buttons for Report (Hidden during Print) -->
+    <div class="report-actions-bar no-print">
+      <button type="button" id="btn-print-report" class="btn btn-primary">
+        <Icons name="print" size={18} />
+        <span data-i18n="btn_print_report">Print / Save as PDF</span>
+      </button>
+      <button type="button" id="btn-new-report" class="btn btn-secondary">
+        <Icons name="refresh" size={18} />
+        <span data-i18n="btn_new_report">New Report</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .report-layout-container {
+    max-width: 900px;
+    margin: 2rem auto;
+  }
+
+  .formal-report-docket {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .report-official-header {
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .report-tricolor-accent {
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%);
+    border-radius: 2px;
+    margin-bottom: 1.25rem;
+  }
+
+  .report-state-tag {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    letter-spacing: 0.08em;
+  }
+
+  .report-main-title {
+    font-size: 1.625rem;
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0.25rem 0;
+  }
+
+  .report-dept-subtext {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .report-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: var(--color-surface-subtle);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  @media (min-width: 600px) {
+    .report-meta-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .meta-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .meta-label {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .meta-value {
+    font-size: 1.0625rem;
+    color: var(--color-primary);
+  }
+
+  .report-section-block {
+    margin-bottom: 2rem;
+  }
+
+  .section-title-sm {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .beneficiary-particulars-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    background: var(--color-surface-subtle);
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  @media (max-width: 500px) {
+    .beneficiary-particulars-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .part-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .part-label {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .part-val {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+
+  .report-chart-box {
+    background: var(--color-surface-subtle);
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  :global(.chart-bars-container) {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  :global(.chart-bar-row) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  :global(.chart-bar-label) {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  :global(.chart-bars-group) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+  }
+
+  :global(.chart-bar) {
+    height: 24px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    transition: width 0.8s var(--ease-out);
+    white-space: nowrap;
+  }
+
+  :global(.chart-bar-exp) {
+    background-color: var(--color-primary);
+  }
+
+  :global(.chart-bar-rec.bar-matches) {
+    background-color: var(--color-success);
+  }
+
+  :global(.chart-bar-rec.bar-shortage) {
+    background-color: var(--color-danger);
+  }
+
+  .evidence-proof-item {
+    margin-bottom: 1.25rem;
+  }
+
+  .proof-label {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .proof-img-container {
+    max-width: 380px;
+    max-height: 260px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .proof-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .proof-remarks-box {
+    background: var(--color-surface-subtle);
+    border-left: 4px solid var(--color-primary);
+    padding: 0.875rem 1rem;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  .report-rights-summary-block {
+    background: var(--color-primary-subtle);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+    border-left: 4px solid var(--color-primary);
+  }
+
+  .rights-summary-heading {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.35rem;
+  }
+
+  .rights-summary-text {
+    font-size: 0.8125rem;
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  .report-disclaimer-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+    border-top: 1px solid var(--color-border-subtle);
+    margin-top: 1.5rem;
+  }
+
+  .report-actions-bar {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .report-actions-bar .btn {
+    flex: 1;
+  }
+</style>

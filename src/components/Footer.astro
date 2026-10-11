@@ -1,0 +1,179 @@
+---
+import { HELPLINE, HELPLINE_TEL, DEPARTMENT_NAME, LAST_UPDATED } from '../data/constants';
+import Icons from './Icons.astro';
+---
+
+<footer class="gov-footer" role="contentinfo">
+  <div class="container footer-inner">
+    <div class="footer-grid">
+      <!-- Col 1: Helpline & Direct Contacts -->
+      <div class="footer-col">
+        <h3 class="footer-heading" data-i18n="footer_dept">{DEPARTMENT_NAME}</h3>
+        <p class="footer-text" data-i18n="footer_helpline">
+          PDS Toll-Free Helpline: 1967 | National Consumer Helpline: 1915
+        </p>
+        <div class="footer-helpline-box">
+          <Icons name="phone" size={20} />
+          <div>
+            <span class="helpline-num-label">Toll-Free Grievance Helpline</span>
+            <a href={HELPLINE_TEL} class="helpline-num tabular-nums">{HELPLINE}</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 2: Legal & Accessibility Standards -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Standards & Compliance</h3>
+        <p class="footer-text" data-i18n="footer_accessibility">
+          Accessibility Statement: Designed in conformity with GIGW 3.0 (Guidelines for Indian Government Websites) and WCAG 2.1 Level AA standards.
+        </p>
+        <div class="footer-badge-list">
+          <span class="cert-chip">WCAG 2.1 AA</span>
+          <span class="cert-chip">GIGW 3.0</span>
+          <span class="cert-chip">NFSA Compliant</span>
+        </div>
+      </div>
+
+      <!-- Col 3: Disclaimers & Updates -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Public Notice</h3>
+        <p class="footer-text" data-i18n="footer_disclaimer">
+          This portal provides public distribution quota verification, discrepancy calculation, and formal grievance docket generation.
+        </p>
+        <p class="footer-meta" data-i18n="footer_last_updated">
+          Last updated: {LAST_UPDATED}
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright-text">
+        © 2026 Government of Maharashtra. Food, Civil Supplies and Consumer Protection Department.
+      </p>
+      <div class="footer-links">
+        <a href="#faq-section" class="footer-link">Help & FAQs</a>
+        <a href="https://mahaepos.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link">Maha ePoS Portal ↗</a>
+        <a href="https://pgportal.gov.in" target="_blank" rel="noopener noreferrer" class="footer-link">CPGRAMS Redressal ↗</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .gov-footer {
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding: 3rem 0 2rem;
+    margin-top: auto;
+    color: var(--color-text);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .footer-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--color-primary);
+  }
+
+  .footer-text {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .footer-helpline-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--color-primary-subtle);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-primary);
+  }
+
+  .helpline-num-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .helpline-num {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    text-decoration: none;
+    line-height: 1.1;
+  }
+
+  .footer-badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .cert-chip {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    background: var(--badge-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+  }
+
+  .footer-meta {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    font-weight: 500;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--color-border-subtle);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 768px) {
+    .footer-bottom {
+      flex-direction: row;
+    }
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .footer-link {
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+</style>

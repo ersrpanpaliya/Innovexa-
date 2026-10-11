@@ -1,0 +1,363 @@
+---
+import Icons from './Icons.astro';
+---
+
+<section id="step-2" class="wizard-step" aria-labelledby="step-2-heading" hidden>
+  <div class="profile-layout-container">
+    <div class="gov-card profile-card">
+      <div class="card-head">
+        <h2 id="step-2-heading" class="card-title" data-i18n="profile_title">
+          Beneficiary Profile Details
+        </h2>
+        <p class="card-subtitle" data-i18n="profile_subtitle">
+          Provide your ration card information to calculate statutory monthly allocations
+        </p>
+      </div>
+
+      <form id="profile-form" onsubmit="return false;" novalidate>
+        <!-- Full Name -->
+        <div class="form-group">
+          <label for="profile-name" class="form-label">
+            <span data-i18n="field_fullname">Full Name (as on Ration Card)</span>
+            <span class="required-indicator" aria-hidden="true">*</span>
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="profile-name"
+              name="fullname"
+              class="form-input"
+              data-i18n-attr="placeholder:field_fullname_ph"
+              placeholder="e.g. Ramesh Shankar Patil"
+              required
+            />
+          </div>
+          <div id="error-profile-name" class="field-error" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+          <label for="profile-mobile" class="form-label">
+            <span data-i18n="field_mobile">Mobile Number</span>
+            <span class="required-indicator" aria-hidden="true">*</span>
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="tel"
+              id="profile-mobile"
+              name="mobile"
+              class="form-input tabular-nums"
+              maxlength="10"
+              inputmode="numeric"
+              pattern="[0-9]{10}"
+              data-i18n-attr="placeholder:field_mobile_ph"
+              placeholder="10-digit mobile number"
+              required
+            />
+          </div>
+          <p class="field-hint">Used for SMS delivery slips and grievance status updates.</p>
+          <div id="error-profile-mobile" class="field-error" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Ration ID -->
+        <div class="form-group">
+          <label for="profile-ration-id" class="form-label">
+            <span data-i18n="field_ration_id">Ration Card Number / ID</span>
+            <span class="required-indicator" aria-hidden="true">*</span>
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="profile-ration-id"
+              name="rationId"
+              class="form-input"
+              data-i18n-attr="placeholder:field_ration_id_ph"
+              placeholder="e.g. RC-MH-4001020034"
+              required
+            />
+          </div>
+          <div id="error-profile-ration-id" class="field-error" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Card Category Selectable Tile Group -->
+        <div class="form-group">
+          <fieldset class="category-fieldset" role="radiogroup" aria-labelledby="card-category-legend" id="category-radiogroup">
+            <legend id="card-category-legend" class="form-label">
+              <span data-i18n="field_card_category">Select Card Category</span>
+              <span class="required-indicator" aria-hidden="true">*</span>
+            </legend>
+
+            <div class="category-tiles-grid">
+              <!-- Orange Card Tile -->
+              <label class="category-tile" for="cat-orange">
+                <input
+                  type="radio"
+                  id="cat-orange"
+                  name="card-category-radio"
+                  value="Orange"
+                  class="sr-only category-radio-input"
+                  required
+                />
+                <div class="tile-content">
+                  <div class="tile-top-row">
+                    <span class="color-chip chip-orange" aria-hidden="true"></span>
+                    <span class="tile-name" data-i18n="card_category_orange">Orange Card</span>
+                  </div>
+                  <p class="tile-desc" data-i18n="card_desc_orange">
+                    Priority Household / Above Poverty Line with annual income up to statutory ceiling
+                  </p>
+                  <div class="tile-quota-summary tabular-nums">
+                    <span>Wheat: 10kg</span> • <span>Rice: 9kg</span> • <span>Sugar: 5kg</span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Yellow Card Tile -->
+              <label class="category-tile" for="cat-yellow">
+                <input
+                  type="radio"
+                  id="cat-yellow"
+                  name="card-category-radio"
+                  value="Yellow"
+                  class="sr-only category-radio-input"
+                />
+                <div class="tile-content">
+                  <div class="tile-top-row">
+                    <span class="color-chip chip-yellow" aria-hidden="true"></span>
+                    <span class="tile-name" data-i18n="card_category_yellow">Yellow Card (BPL)</span>
+                  </div>
+                  <p class="tile-desc" data-i18n="card_desc_yellow">
+                    Below Poverty Line families with State Yellow Card registration
+                  </p>
+                  <div class="tile-quota-summary tabular-nums">
+                    <span>Wheat: 8kg</span> • <span>Rice: 7kg</span> • <span>Sugar: 3kg</span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- White Card Tile -->
+              <label class="category-tile" for="cat-white">
+                <input
+                  type="radio"
+                  id="cat-white"
+                  name="card-category-radio"
+                  value="White"
+                  class="sr-only category-radio-input"
+                />
+                <div class="tile-content">
+                  <div class="tile-top-row">
+                    <span class="color-chip chip-white" aria-hidden="true"></span>
+                    <span class="tile-name" data-i18n="card_category_white">White Card (APL)</span>
+                  </div>
+                  <p class="tile-desc" data-i18n="card_desc_white">
+                    Above Poverty Line households possessing White Card
+                  </p>
+                  <div class="tile-quota-summary tabular-nums">
+                    <span>Wheat: 5kg</span> • <span>Rice: 5kg</span> • <span>Sugar: 2kg</span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Antyodaya (AAY) Tile -->
+              <label class="category-tile" for="cat-aay">
+                <input
+                  type="radio"
+                  id="cat-aay"
+                  name="card-category-radio"
+                  value="AAY"
+                  class="sr-only category-radio-input"
+                />
+                <div class="tile-content">
+                  <div class="tile-top-row">
+                    <span class="color-chip chip-aay" aria-hidden="true"></span>
+                    <span class="tile-name" data-i18n="card_category_aay">Antyodaya (AAY)</span>
+                  </div>
+                  <p class="tile-desc" data-i18n="card_desc_aay">
+                    Poorest of poor families entitled to highest subsidized allocation
+                  </p>
+                  <div class="tile-quota-summary tabular-nums">
+                    <span>Wheat: 15kg</span> • <span>Rice: 20kg</span> • <span>Sugar: 1kg</span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </fieldset>
+          <div id="error-card-category" class="field-error" role="alert" aria-live="polite"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions-row">
+          <button type="button" id="btn-profile-continue" class="btn btn-primary">
+            <span data-i18n="btn_continue">Continue</span>
+            <Icons name="arrow-right" size={18} />
+          </button>
+          <button type="button" id="btn-profile-back" class="btn btn-secondary">
+            <Icons name="arrow-left" size={18} />
+            <span data-i18n="btn_back">Back</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .profile-layout-container {
+    max-width: 760px;
+    margin: 2rem auto;
+  }
+
+  .card-head {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+
+  .category-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .category-tiles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 600px) {
+    .category-tiles-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .category-tile {
+    display: block;
+    cursor: pointer;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    padding: 1rem;
+    transition: border-color var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+    position: relative;
+  }
+
+  .category-tile:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-surface-hover);
+  }
+
+  /* Checked tile state */
+  .category-radio-input:checked + .tile-content {
+    color: var(--color-text);
+  }
+
+  .category-tile:has(.category-radio-input:checked) {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-subtle);
+    box-shadow: 0 0 0 2px var(--color-primary);
+  }
+
+  .category-tile:has(.category-radio-input:focus-visible) {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  .tile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tile-top-row {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .color-chip {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .chip-orange {
+    background-color: var(--cat-orange);
+    box-shadow: 0 0 0 2px #C2410C;
+  }
+  .chip-yellow {
+    background-color: var(--cat-yellow);
+    box-shadow: 0 0 0 2px #A16207;
+  }
+  .chip-white {
+    background-color: #E2E8F0;
+    box-shadow: 0 0 0 2px #94A3B8;
+  }
+  .chip-aay {
+    background-color: var(--cat-aay);
+    box-shadow: 0 0 0 2px #991B1B;
+  }
+
+  .tile-name {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+
+  .tile-desc {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  .tile-quota-summary {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: var(--color-surface);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+  }
+
+  .form-actions-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .form-actions-row .btn {
+    flex: 1;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>

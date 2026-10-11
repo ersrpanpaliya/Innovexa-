@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Step1SignIn from '../components/Step1SignIn.astro';
+import Step2Profile from '../components/Step2Profile.astro';
+import Step3Entitlement from '../components/Step3Entitlement.astro';
+import Step4Records from '../components/Step4Records.astro';
+import Step5Report from '../components/Step5Report.astro';
+import { SITE_NAME } from '../data/constants';
+---
+
+<Base title={`${SITE_NAME} - Maharashtra Public Distribution System`}>
+  <!-- Step 1: Sign-In, 3D Hero, Guidelines & FAQ -->
+  <Step1SignIn />
+
+  <!-- Step 2: Beneficiary Profile & Selectable Category Tiles -->
+  <Step2Profile />
+
+  <!-- Step 3: Statutory Entitlements & Progress Rings -->
+  <Step3Entitlement />
+
+  <!-- Step 4: Delivery Records Table, Drag-and-Drop Evidence & Live Side Panel -->
+  <Step4Records />
+
+  <!-- Step 5: Official Discrepancy Grievance Report -->
+  <Step5Report />
+</Base>
